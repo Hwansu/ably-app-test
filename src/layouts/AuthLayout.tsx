@@ -1,10 +1,14 @@
+import { Header } from 'components'
 import { Outlet } from 'react-router-dom'
 
 function AuthLayout() {
   return (
-    <div>
-      <Outlet />
-    </div>
+    <>
+      <Header />
+      <div className="page-content">
+        <Outlet />
+      </div>
+    </>
   )
 }
 
