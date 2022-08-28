@@ -1,13 +1,20 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es6: true,
     node: true,
   },
-  extends: ['airbnb', 'plugin:prettier/recommended', 'eslint:recommended'],
-  plugins: ['prettier', 'import'],
+  extends: [
+    'airbnb',
+    'plugin:prettier/recommended',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+  ],
+  plugins: ['prettier', 'import', '@typescript-eslint', 'react-hooks'],
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: ['@babel/eslint-parser', '@typescript-eslint/parser'],
     ecmaVersion: 12,
     sourceType: 'module',
   },
@@ -15,7 +22,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/react-in-jsx-scope': 'off',
     'import/prefer-default-export': 'off',
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'warn',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -25,9 +32,14 @@ module.exports = {
       },
     ],
     'react/function-component-definition': [
-      2,
+      'off',
       { namedComponents: ['arrow-function', 'function-expression'] },
     ],
+    'no-unused-vars': 'warn',
+    'react/jsx-no-useless-fragment': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/jsx-props-no-spreading': 'off',
   },
   settings: {
     'import/resolver': {
