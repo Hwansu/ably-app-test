@@ -1,12 +1,15 @@
+import React from 'react'
 import { RouteObject, useRoutes } from 'react-router-dom'
-import { Login } from '../pages'
+import { AuthLayout } from 'layouts'
+
+const Login = React.lazy(() => import('pages/Login/Login'))
 
 const routes: RouteObject[] = [
   {
-    element: <></>,
+    element: <AuthLayout />,
     children: [
       { path: '/', element: <Login /> },
-      { path: 'signup', element: <></> },
+      // { path: 'signup', element: <></> },
     ],
   },
 ]
