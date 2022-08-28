@@ -14,6 +14,6 @@ export const routeMeta: {
 }
 
 const API_PREFIX = '/api'
-export const API_URL = {
+export const API_ENDPOINT = {
   login: `${API_PREFIX}/login`,
 } as const

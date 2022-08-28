@@ -13,22 +13,20 @@ header {
 }
 
 .login-content button {
-  height: 30px;
+  height: 40px;
   width: 80px;
+  margin: 0 6px;
 }
 
 .login-block {
   margin: 20px;
   display: flex;
-}
-
-.login-block span {
-  flex: 1;
-  margin-right: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-block input {
   height: 30px;
-  width: 200px;
+  width: 250px;
   padding: 0 10px;
 }

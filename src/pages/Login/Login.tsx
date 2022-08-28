@@ -12,9 +12,12 @@ const Login = () => {
         <div className="login-block">
           <input type="password" placeholder="Password" {...register('password')} />
         </div>
-        <button type="button" onClick={handleLoginClick}>
-          Login
-        </button>
+        <div className="login-block">
+          <button type="button" onClick={handleLoginClick}>
+            Login
+          </button>
+          <button type="button">Password Reset</button>
+        </div>
       </form>
     </div>
   )

@@ -1,20 +1,39 @@
 import { LoginApi } from 'api'
 import { useCallback } from 'react'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+interface FormInput {
+  email: string
+  password: string
+}
 
 const useLogin = () => {
   /**
    * Define State
    */
   const { doLogin } = LoginApi()
-  const { register } = useForm()
+  const { register, handleSubmit } = useForm<FormInput>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
 
   /**
    * Define Memoization
    */
-  const handleLoginClick = useCallback(async () => {
-    // await doLogin({})
-  }, [doLogin])
+  const onLoginSubmit = useCallback<SubmitHandler<FormInput>>(
+    async ({ email, password }) => {
+      const res = await doLogin({ email, password })
+      if (!res) {
+        window.alert('로그인 중 오류가 발생했습니다.')
+      }
+    },
+    [doLogin]
+  )
+  const handleLoginClick = useCallback(() => {
+    handleSubmit(onLoginSubmit)()
+  }, [handleSubmit, onLoginSubmit])
 
   /**
    * Define Effect
