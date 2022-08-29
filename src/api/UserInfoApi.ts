@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { API_ENDPOINT, messages } from 'constant'
 import { ApiResponseStatus, CommonApiFailure, UserInfoSuccess } from 'types'
 import { api } from './api'
@@ -20,7 +19,7 @@ const UserInfoApi = () => {
     try {
       const { data, status } = await get<UserInfoSuccess>(API_ENDPOINT.userInfo)
       return data
-    } catch (error: unknown | AxiosError<CommonApiFailure>) {
+    } catch (error) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {
         throw new Error(error.response.data.error.message)
       }
@@ -32,7 +31,7 @@ const UserInfoApi = () => {
     try {
       const { data } = await post<LogoutSuccess>(API_ENDPOINT.logout)
       return { isSuccess: true, data }
-    } catch (error: unknown | AxiosError<CommonApiFailure>) {
+    } catch (error) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {
         return { isSuccess: false, message: error.response.data.error.message }
       }

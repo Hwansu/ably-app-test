@@ -1,6 +1,6 @@
 import { ResetPasswordApi } from 'api'
 import { messages, routePaths } from 'constant'
-import { useCallback, useLayoutEffect } from 'react'
+import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { emailSelector, stepSelector } from 'recoils'

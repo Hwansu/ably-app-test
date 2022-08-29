@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios'
 import { API_ENDPOINT, messages } from 'constant'
 import { ApiResponseStatus, CommonApiFailure } from 'types'
 import { api } from './api'
@@ -21,7 +20,7 @@ const LoginApi = () => {
         password,
       })
       return { isSuccess: true, data }
-    } catch (error: unknown | AxiosError<CommonApiFailure>) {
+    } catch (error) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {
         return { isSuccess: false, message: error.response.data.error.message }
       }
