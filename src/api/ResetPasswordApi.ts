@@ -1,23 +1,27 @@
-import { API_ENDPOINT } from 'constant'
-import { ApiResponseStatus } from 'types'
+import { API_ENDPOINT, messages } from 'constant'
+import { ApiResponseStatus, CommonApiFailure, IssueTokenSuccess } from 'types'
 import { api } from './api'
 
-interface IssueTokenSuccess {
-  issueToken: string // 인증 코드 발급 요청 토큰
-  remainMillisecond: number // 인증 코드 확인 남은 시간
-}
-
 interface fnRequestIssueToken {
-  (email: string): Promise<ApiResponseStatus<string>>
+  (email: string): Promise<ApiResponseStatus<IssueTokenSuccess>>
 }
 
 const ResetPasswordApi = () => {
-  const { get, isAxiosError, post } = api
+  const { get, isAxiosError } = api
 
   const requestIssueToken: fnRequestIssueToken = async email => {
-    const res = await get<IssueTokenSuccess>(API_ENDPOINT.resetPassword, { params: { email } })
-    console.log(res)
-    return { isSuccess: true, data: '' }
+    try {
+      const { data, status } = await get<IssueTokenSuccess>(API_ENDPOINT.resetPassword, {
+        params: { email },
+      })
+      if (status !== 200) return { isSuccess: false, message: messages.apiError }
+      return { isSuccess: true, data }
+    } catch (error) {
+      if (isAxiosError<CommonApiFailure>(error) && error.response) {
+        return { isSuccess: false, message: error.response.data.error.message }
+      }
+      return { isSuccess: false, message: messages.apiError }
+    }
   }
 
   return {

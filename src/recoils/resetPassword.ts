@@ -1,7 +1,7 @@
-import { UseFormRegister } from 'react-hook-form'
 import { atom, DefaultValue, selector } from 'recoil'
+import { IssueTokenSuccess } from 'types'
 
-interface ResetPasswordState {
+interface ResetPasswordState extends IssueTokenSuccess {
   step: number
   email: string
   code: string
@@ -13,6 +13,8 @@ const initState: ResetPasswordState = {
   email: '',
   code: '',
   newPassword: '',
+  issueToken: '',
+  remainMillisecond: 0,
 }
 
 export const resetPasswordState = atom<ResetPasswordState>({
@@ -75,6 +77,22 @@ export const newPasswordSelector = selector({
     set(resetPasswordState, {
       ...rest,
       newPassword: newValue instanceof DefaultValue ? newPassword : newValue,
+    })
+  },
+})
+export const issueTokenSelector = selector({
+  key: 'issueTokenSelector',
+  get: ({ get }) => {
+    const { issueToken, remainMillisecond } = get(resetPasswordState)
+    return { issueToken, remainMillisecond }
+  },
+  set: ({ get, set }, newValue) => {
+    const { issueToken, remainMillisecond, ...rest } = get(resetPasswordState)
+    set(resetPasswordState, {
+      ...rest,
+      issueToken: newValue instanceof DefaultValue ? issueToken : newValue.issueToken,
+      remainMillisecond:
+        newValue instanceof DefaultValue ? remainMillisecond : newValue.remainMillisecond,
     })
   },
 })

@@ -1,4 +1,3 @@
-import { useResetPassword } from 'hooks'
 import { useMemo } from 'react'
 import { useRecoilValue } from 'recoil'
 import { stepSelector } from 'recoils'
@@ -7,7 +6,7 @@ import RequestCode from './RequestCode'
 import VerifyCode from './VerifyCode'
 
 const ResetPassword = () => {
-  const { step } = useResetPassword()
+  const step = useRecoilValue(stepSelector)
   const stepComponent = useMemo(
     () => [<RequestCode />, <VerifyCode />, <ChangePassword />][step],
     [step]
