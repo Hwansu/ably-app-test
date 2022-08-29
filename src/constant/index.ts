@@ -1,5 +1,6 @@
 export const routePaths = {
   login: '/',
+  userInfo: '/userinfo',
 } as const
 export const routeMeta: {
   [k in string]: {
@@ -8,8 +9,12 @@ export const routeMeta: {
   }
 } = {
   [routePaths.login]: {
-    path: '/',
+    path: routePaths.login,
     title: 'Login',
+  },
+  [routePaths.userInfo]: {
+    path: routePaths.userInfo,
+    title: 'User Info',
   },
 }
 

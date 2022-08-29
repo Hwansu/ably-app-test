@@ -1,7 +1,7 @@
 import { Header } from 'components'
 import { Outlet } from 'react-router-dom'
 
-const AuthLayout = () => {
+const MainLayout = () => {
   return (
     <>
       <Header />
@@ -12,4 +12,4 @@ const AuthLayout = () => {
   )
 }
 
-export default AuthLayout
+export default MainLayout
