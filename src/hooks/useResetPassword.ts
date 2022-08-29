@@ -1,9 +1,8 @@
 import { ResetPasswordApi } from 'api'
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useCallback } from 'react'
+import { useRecoilState } from 'recoil'
 import { emailSelector, stepSelector } from 'recoils'
-import { issueTokenSelector } from 'recoils/resetPassword'
+import { codeSelector, issueTokenSelector } from 'recoils/resetPassword'
 
 const useResetPassword = () => {
   /**
@@ -11,8 +10,9 @@ const useResetPassword = () => {
    */
   const [step, setStep] = useRecoilState(stepSelector)
   const [email, setEmail] = useRecoilState(emailSelector)
+  const [code, setCode] = useRecoilState(codeSelector)
   const [token, setToken] = useRecoilState(issueTokenSelector)
-  const { requestIssueToken } = ResetPasswordApi()
+  const { requestIssueToken, requestVerification } = ResetPasswordApi()
 
   /**
    * Define Memoization
@@ -24,6 +24,14 @@ const useResetPassword = () => {
     },
     [setEmail]
   )
+  const handleCodeChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      const { value } = e.currentTarget
+      setCode(value)
+    },
+    [setCode]
+  )
+
   const handleRequestIssueToken = useCallback(async () => {
     const res = await requestIssueToken(email)
     if (!res.isSuccess) {
@@ -34,14 +42,27 @@ const useResetPassword = () => {
     setToken({ issueToken, remainMillisecond })
     setStep(p => p + 1)
   }, [email, requestIssueToken, setStep, setToken])
+  const handleRequestVerification = useCallback(async () => {
+    const authCode = code
+    const { issueToken } = token
+    const res = await requestVerification({ email, authCode, issueToken })
+    if (!res.isSuccess) {
+      window.alert(res.message)
+      //   return
+    }
+  }, [code, email, requestVerification, token])
   const handleNextClick = useCallback(() => {
     switch (step) {
       case 0:
         handleRequestIssueToken()
         break
+      case 1:
+        handleRequestVerification()
+        break
       default:
     }
-  }, [handleRequestIssueToken, step])
+  }, [handleRequestIssueToken, handleRequestVerification, step])
+  const handlePrevClick = useCallback(() => setStep(p => p - 1), [setStep])
 
   /**
    * Define Effect
@@ -52,8 +73,10 @@ const useResetPassword = () => {
     setStep,
     handleEmailChange,
     handleNextClick,
+    handlePrevClick,
     setToken,
     token,
+    handleCodeChange,
   }
 }
 
