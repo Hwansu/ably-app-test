@@ -42,13 +42,18 @@ const useLogin = () => {
     handleSubmit(onLoginSubmit)()
   }, [handleSubmit, onLoginSubmit])
 
+  const handleResetPasswordClick = useCallback(() => {
+    nav(routePaths.resetPassword)
+  }, [nav])
+
   /**
    * Define Effect
    */
 
   return {
-    handleLoginClick,
     register,
+    handleLoginClick,
+    handleResetPasswordClick,
   }
 }
 

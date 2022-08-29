@@ -1,3 +1,5 @@
+import { useResetPassword } from 'hooks'
+
 const VerifyCode = () => {
   return <></>
 }

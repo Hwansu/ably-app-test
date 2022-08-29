@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import UserInfoApi from 'api/UserInfoApi'
+import { UserInfoApi } from 'api'
 import { routePaths } from 'constant'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'

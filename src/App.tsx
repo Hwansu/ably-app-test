@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Suspense } from 'react'
+import { RecoilRoot } from 'recoil'
 import Router from './routes'
 import './App.css'
 
@@ -17,11 +18,13 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </Suspense>
+      <RecoilRoot>
+        <Suspense>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </Suspense>
+      </RecoilRoot>
     </QueryClientProvider>
   )
 }

@@ -1,7 +1,7 @@
 import { useLogin } from 'hooks'
 
 const Login = () => {
-  const { register, handleLoginClick } = useLogin()
+  const { register, handleLoginClick, handleResetPasswordClick } = useLogin()
 
   return (
     <div className="login-content">
@@ -16,7 +16,9 @@ const Login = () => {
           <button type="button" onClick={handleLoginClick}>
             로그인
           </button>
-          <button type="button">비밀번호 변경</button>
+          <button type="button" onClick={handleResetPasswordClick}>
+            비밀번호 변경
+          </button>
         </div>
       </form>
     </div>
