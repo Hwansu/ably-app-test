@@ -4,6 +4,16 @@ import {
   emailSelector,
   codeSelector,
   newPasswordSelector,
+  confirmTokenSelector,
+  issueTokenSelector,
 } from './resetPassword'
 
-export { resetPasswordState, stepSelector, emailSelector, codeSelector, newPasswordSelector }
+export {
+  resetPasswordState,
+  stepSelector,
+  emailSelector,
+  codeSelector,
+  newPasswordSelector,
+  confirmTokenSelector,
+  issueTokenSelector,
+}

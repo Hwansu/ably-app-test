@@ -18,7 +18,7 @@ const VerifyCode = () => {
       </div>
       <div className="login-block">
         <button type="button" onClick={handlePrevClick}>
-          이전
+          처음으로
         </button>
         <button type="button" onClick={handleNextClick}>
           다음

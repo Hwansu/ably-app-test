@@ -7,10 +7,10 @@ const Login = () => {
     <div className="login-content">
       <form onSubmit={e => e.preventDefault()}>
         <div className="login-block">
-          <input placeholder="E-mail" {...register('email')} />
+          <input placeholder="이메일" {...register('email')} />
         </div>
         <div className="login-block">
-          <input type="password" placeholder="Password" {...register('password')} />
+          <input type="password" placeholder="비밀번호" {...register('password')} />
         </div>
         <div className="login-block">
           <button type="button" onClick={handleLoginClick}>

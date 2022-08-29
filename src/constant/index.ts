@@ -14,15 +14,15 @@ export const routeMeta: {
 } = {
   [routePaths.login]: {
     path: routePaths.login,
-    title: 'Login',
+    title: '로그인',
   },
   [routePaths.userInfo]: {
     path: routePaths.userInfo,
-    title: 'User Info',
+    title: '회원 정보',
   },
   [routePaths.resetPassword]: {
     path: routePaths.resetPassword,
-    title: 'Reset Password',
+    title: '비밀번호 변경',
   },
 }
 
@@ -43,4 +43,6 @@ export const authApis: readonly string[] = [API_ENDPOINT.userInfo, API_ENDPOINT.
  */
 export const messages = {
   apiError: '서버 오류가 발생했습니다.',
+  expireTime: '인증 시간이 만료되었습니다.',
+  successReset: '비밀번호 변경이 완료되었습니다.',
 }

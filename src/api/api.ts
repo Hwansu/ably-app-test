@@ -40,20 +40,22 @@ axiosInstance.interceptors.response.use(
 
 export const api: {
   axiosInstance: AxiosInstance
+  isAxiosError<T>(error: unknown): error is AxiosError<T, any>
   get: typeof axiosInstance.get
   post: typeof axiosInstance.post
-  isAxiosError<T>(error: unknown): error is AxiosError<T, any>
-  //   put: typeof axiosInstance.put
-  //   delete: typeof axiosInstance.delete
+  patch: typeof axiosInstance.patch
 } = {
   axiosInstance,
+  isAxiosError<T>(error: unknown): error is AxiosError<T> {
+    return axios.isAxiosError(error)
+  },
   get(url, config) {
     return axiosInstance.get(url, config)
   },
   post(url, data) {
     return axiosInstance.post(url, data)
   },
-  isAxiosError<T>(error: unknown): error is AxiosError<T> {
-    return axios.isAxiosError(error)
+  patch(url, data) {
+    return axiosInstance.patch(url, data)
   },
 }

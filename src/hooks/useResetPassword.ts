@@ -1,8 +1,16 @@
 import { ResetPasswordApi } from 'api'
+import { messages, routePaths } from 'constant'
 import { useCallback } from 'react'
-import { useRecoilState } from 'recoil'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import { emailSelector, stepSelector } from 'recoils'
-import { codeSelector, issueTokenSelector } from 'recoils/resetPassword'
+import {
+  codeSelector,
+  confirmTokenSelector,
+  issueTokenSelector,
+  newPasswordSelector,
+  resetPasswordState,
+} from 'recoils/resetPassword'
 
 const useResetPassword = () => {
   /**
@@ -12,7 +20,11 @@ const useResetPassword = () => {
   const [email, setEmail] = useRecoilState(emailSelector)
   const [code, setCode] = useRecoilState(codeSelector)
   const [token, setToken] = useRecoilState(issueTokenSelector)
-  const { requestIssueToken, requestVerification } = ResetPasswordApi()
+  const [confirmToken, setCToken] = useRecoilState(confirmTokenSelector)
+  const [newPwd, setNewPwd] = useRecoilState(newPasswordSelector)
+  const resetState = useResetRecoilState(resetPasswordState)
+  const { requestIssueToken, requestVerification, requestResetPwd } = ResetPasswordApi()
+  const nav = useNavigate()
 
   /**
    * Define Memoization
@@ -31,6 +43,20 @@ const useResetPassword = () => {
     },
     [setCode]
   )
+  const handlePasswordChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      const { value: newPassword } = e.currentTarget
+      setNewPwd(p => ({ ...p, newPassword }))
+    },
+    [setNewPwd]
+  )
+  const handlePasswordConfirmChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      const { value: newPasswordConfirm } = e.currentTarget
+      setNewPwd(p => ({ ...p, newPasswordConfirm }))
+    },
+    [setNewPwd]
+  )
 
   const handleRequestIssueToken = useCallback(async () => {
     const res = await requestIssueToken(email)
@@ -44,13 +70,31 @@ const useResetPassword = () => {
   }, [email, requestIssueToken, setStep, setToken])
   const handleRequestVerification = useCallback(async () => {
     const authCode = code
-    const { issueToken } = token
+    const { issueToken, remainMillisecond } = token
+    if (remainMillisecond === 0) {
+      window.alert(messages.expireTime)
+      return
+    }
     const res = await requestVerification({ email, authCode, issueToken })
     if (!res.isSuccess) {
       window.alert(res.message)
-      //   return
+      return
     }
-  }, [code, email, requestVerification, token])
+    const { confirmToken: cToken } = res.data
+    setCToken(cToken)
+    setStep(p => p + 1)
+  }, [code, email, requestVerification, setCToken, setStep, token])
+  const handleRequestResetPwd = useCallback(async () => {
+    const { newPassword, newPasswordConfirm } = newPwd
+    const res = await requestResetPwd({ email, confirmToken, newPassword, newPasswordConfirm })
+    if (!res.isSuccess) {
+      window.alert(res.message)
+      return
+    }
+    window.alert(messages.successReset)
+    nav(routePaths.login)
+  }, [confirmToken, email, nav, newPwd, requestResetPwd])
+
   const handleNextClick = useCallback(() => {
     switch (step) {
       case 0:
@@ -59,10 +103,16 @@ const useResetPassword = () => {
       case 1:
         handleRequestVerification()
         break
+      case 2:
+        handleRequestResetPwd()
+        break
       default:
     }
-  }, [handleRequestIssueToken, handleRequestVerification, step])
-  const handlePrevClick = useCallback(() => setStep(p => p - 1), [setStep])
+  }, [handleRequestIssueToken, handleRequestResetPwd, handleRequestVerification, step])
+  const handlePrevClick = useCallback(() => {
+    resetState()
+    setStep(0)
+  }, [resetState, setStep])
 
   /**
    * Define Effect
@@ -77,6 +127,8 @@ const useResetPassword = () => {
     setToken,
     token,
     handleCodeChange,
+    handlePasswordChange,
+    handlePasswordConfirmChange,
   }
 }
 
