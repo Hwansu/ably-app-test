@@ -12,7 +12,7 @@ interface fnDoLogin {
 }
 
 const LoginApi = () => {
-  const { post, axiosInstance, isAxiosError } = api
+  const { post, isAxiosError } = api
 
   const doLogin: fnDoLogin = async ({ email, password }) => {
     try {
@@ -20,7 +20,6 @@ const LoginApi = () => {
         email,
         password,
       })
-      // axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
       return { isSuccess: true, data }
     } catch (error: unknown | AxiosError<CommonApiFailure>) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {

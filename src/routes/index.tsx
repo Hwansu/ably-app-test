@@ -5,6 +5,7 @@ import { routePaths } from 'constant'
 
 const Login = React.lazy(() => import('pages/Login/Login'))
 const UserInfo = React.lazy(() => import('pages/UserInfo/UserInfo'))
+const ResetPassword = React.lazy(() => import('pages/ResetPassword/ResetPassword'))
 
 const Router = () =>
   useRoutes([
@@ -12,7 +13,7 @@ const Router = () =>
       element: <AuthLayout />,
       children: [
         { path: routePaths.login, element: <Login /> },
-        // { path: 'signup', element: <></> },
+        { path: routePaths.resetPassword, element: <ResetPassword /> },
       ],
     },
     {

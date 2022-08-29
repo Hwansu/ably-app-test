@@ -3,6 +3,7 @@ import { useUserInfo } from 'hooks'
 const UserInfo = () => {
   const {
     data: { email, name, profileImage },
+    handleLogoutClick,
   } = useUserInfo()
   return (
     <div className="userinfo-content">
@@ -17,6 +18,9 @@ const UserInfo = () => {
           <span>{email}</span>
         </p>
       </div>
+      <button type="button" onClick={handleLogoutClick}>
+        로그아웃
+      </button>
     </div>
   )
 }

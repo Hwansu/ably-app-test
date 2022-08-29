@@ -12,9 +12,9 @@ header {
   text-align: center;
 }
 
-.login-content button {
+button {
   height: 40px;
-  width: 80px;
+  width: 90px;
   margin: 0 6px;
 }
 
@@ -41,7 +41,7 @@ header {
   height: 200px;
 }
 .userinfo-data-content {
-  margin-top: 50px;
+  margin: 50px 0;
 }
 .userinfo-data-content p {
   display: flex;

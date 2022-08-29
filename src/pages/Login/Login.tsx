@@ -14,9 +14,9 @@ const Login = () => {
         </div>
         <div className="login-block">
           <button type="button" onClick={handleLoginClick}>
-            Login
+            로그인
           </button>
-          <button type="button">Password Reset</button>
+          <button type="button">비밀번호 변경</button>
         </div>
       </form>
     </div>
