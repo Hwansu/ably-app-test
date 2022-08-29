@@ -1,3 +1,6 @@
+/**
+ * Define Constants about Route Data
+ */
 export const routePaths = {
   login: '/',
   userInfo: '/userinfo',
@@ -18,6 +21,9 @@ export const routeMeta: {
   },
 }
 
+/**
+ * Define Constants about API EndPoint
+ */
 const API_PREFIX = '/api'
 export const API_ENDPOINT = {
   login: `${API_PREFIX}/login`,
