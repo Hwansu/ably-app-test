@@ -6,7 +6,7 @@ const RequestCode = () => {
   return (
     <div className="login-content">
       <div className="login-block">
-        <input placeholder="E-mail" onChange={handleEmailChange} />
+        <input placeholder="이메일" onChange={handleEmailChange} />
       </div>
       <div className="login-block">
         <button type="button" onClick={handleNextClick}>

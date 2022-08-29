@@ -1,6 +1,6 @@
 import { ResetPasswordApi } from 'api'
 import { messages, routePaths } from 'constant'
-import { useCallback } from 'react'
+import { useCallback, useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { emailSelector, stepSelector } from 'recoils'
@@ -93,7 +93,9 @@ const useResetPassword = () => {
     }
     window.alert(messages.successReset)
     nav(routePaths.login)
-  }, [confirmToken, email, nav, newPwd, requestResetPwd])
+    resetState()
+    setStep(0)
+  }, [confirmToken, email, nav, newPwd, requestResetPwd, resetState, setStep])
 
   const handleNextClick = useCallback(() => {
     switch (step) {

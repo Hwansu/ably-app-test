@@ -3,6 +3,8 @@ import { routePaths } from 'constant'
 import { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { useResetRecoilState } from 'recoil'
+import { resetPasswordState } from 'recoils'
 
 interface FormInput {
   email: string
@@ -21,6 +23,7 @@ const useLogin = () => {
     },
   })
   const nav = useNavigate()
+  const resetState = useResetRecoilState(resetPasswordState)
 
   /**
    * Define Memoization
@@ -43,8 +46,9 @@ const useLogin = () => {
   }, [handleSubmit, onLoginSubmit])
 
   const handleResetPasswordClick = useCallback(() => {
+    resetState()
     nav(routePaths.resetPassword)
-  }, [nav])
+  }, [nav, resetState])
 
   /**
    * Define Effect
