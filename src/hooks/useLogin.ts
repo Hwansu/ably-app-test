@@ -25,8 +25,8 @@ const useLogin = () => {
   const onLoginSubmit = useCallback<SubmitHandler<FormInput>>(
     async ({ email, password }) => {
       const res = await doLogin({ email, password })
-      if (!res) {
-        window.alert('로그인 중 오류가 발생했습니다.')
+      if (!res.isSuccess) {
+        window.alert(res.message ? res.message : '로그인 중 오류가 발생했습니다.')
       }
     },
     [doLogin]

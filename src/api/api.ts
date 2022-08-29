@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosError, AxiosInstance } from 'axios'
 
 const axiosInstance = axios.create({
   baseURL: 'https://ably-frontend-assignment-server.vercel.app/',
@@ -36,6 +36,7 @@ export const api: {
   axiosInstance: AxiosInstance
   get: typeof axiosInstance.get
   post: typeof axiosInstance.post
+  isAxiosError<T>(error: unknown): error is AxiosError<T, any>
   //   put: typeof axiosInstance.put
   //   delete: typeof axiosInstance.delete
 } = {
@@ -45,5 +46,8 @@ export const api: {
   },
   post(url, data) {
     return axiosInstance.post(url, data)
+  },
+  isAxiosError<T>(error: unknown): error is AxiosError<T> {
+    return axios.isAxiosError(error)
   },
 }
