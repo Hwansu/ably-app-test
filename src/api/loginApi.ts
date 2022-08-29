@@ -1,39 +1,32 @@
 import axios, { AxiosError } from 'axios'
-import { API_ENDPOINT } from 'constant'
-import { ApiResponseStatus } from 'types'
+import { API_ENDPOINT, messages } from 'constant'
+import { ApiResponseStatus, CommonApiFailure } from 'types'
 import { api } from './api'
 
 interface LoginSuccess {
   accessToken: string
 }
-interface LoginFailure {
-  error: {
-    message: string
-  }
+
+interface fnDoLogin {
+  (p: { email: string; password: string }): Promise<ApiResponseStatus<LoginSuccess>>
 }
-type fnDoLogin = (p: {
-  email: string
-  password: string
-}) => Promise<ApiResponseStatus<LoginSuccess>>
 
 const LoginApi = () => {
   const { post, axiosInstance, isAxiosError } = api
 
   const doLogin: fnDoLogin = async ({ email, password }) => {
     try {
-      const {
-        data: { accessToken },
-      } = await post<LoginSuccess>(API_ENDPOINT.login, {
+      const { data } = await post<LoginSuccess>(API_ENDPOINT.login, {
         email,
         password,
       })
-      axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
-      return Promise.resolve({ isSuccess: true })
-    } catch (error: unknown | AxiosError<LoginFailure>) {
-      if (isAxiosError<LoginFailure>(error) && error.response) {
-        return Promise.resolve({ isSuccess: false, message: error.response.data.error.message })
+      // axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+      return { isSuccess: true, data }
+    } catch (error: unknown | AxiosError<CommonApiFailure>) {
+      if (isAxiosError<CommonApiFailure>(error) && error.response) {
+        return { isSuccess: false, message: error.response.data.error.message }
       }
-      return Promise.resolve({ isSuccess: false, message: '' })
+      return { isSuccess: false, message: messages.apiError }
     }
   }
 

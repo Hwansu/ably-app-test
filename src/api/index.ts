@@ -1,3 +1,3 @@
-import LoginApi from './loginApi'
+import LoginApi from './LoginApi'
 
 export { LoginApi }

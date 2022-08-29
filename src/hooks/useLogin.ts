@@ -29,9 +29,11 @@ const useLogin = () => {
     async ({ email, password }) => {
       const res = await doLogin({ email, password })
       if (!res.isSuccess) {
-        window.alert(res.message ? res.message : '로그인 중 오류가 발생했습니다.')
+        window.alert(res.message)
         return
       }
+      const { accessToken } = res.data
+      window.sessionStorage.setItem('token', accessToken)
       nav(routePaths.userInfo)
     },
     [doLogin, nav]

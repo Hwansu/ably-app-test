@@ -1,4 +1,4 @@
-import useLogin from 'hooks/useLogin'
+import { useLogin } from 'hooks'
 
 const Login = () => {
   const { register, handleLoginClick } = useLogin()

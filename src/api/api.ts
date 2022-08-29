@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
+import { authApis } from 'constant'
 
 const axiosInstance = axios.create({
   baseURL: 'https://ably-frontend-assignment-server.vercel.app/',
@@ -10,7 +11,12 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   function (config) {
     // 요청이 전달되기 전에 작업 수행
-    return config
+    const c = { ...config }
+    if (c.headers && authApis.includes(c.url ? c.url : '')) {
+      const accessToken = sessionStorage.getItem('token')
+      c.headers.Authorization = `Bearer ${accessToken}`
+    }
+    return c
   },
   function (error) {
     // 요청 오류가 있는 작업 수행

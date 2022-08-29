@@ -45,7 +45,7 @@ header {
 }
 .userinfo-data-content p {
   display: flex;
-  padding-right: 50px;
+  /* padding-right: 50px; */
 }
 .userinfo-data-content p :first-child {
   flex: 1;

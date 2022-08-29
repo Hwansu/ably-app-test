@@ -27,4 +27,13 @@ export const routeMeta: {
 const API_PREFIX = '/api'
 export const API_ENDPOINT = {
   login: `${API_PREFIX}/login`,
+  userInfo: `${API_PREFIX}/user`,
 } as const
+export const authApis: readonly string[] = [API_ENDPOINT.userInfo]
+
+/**
+ * Define Messages
+ */
+export const messages = {
+  apiError: '서버 오류가 발생했습니다.',
+}
