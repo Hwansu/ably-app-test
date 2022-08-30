@@ -22,7 +22,12 @@ const VerifyCode = () => {
   return (
     <div className="login-content">
       <div className="login-block">
-        <Input placeholder="인증코드" onChange={handleCodeChange} onKeyDown={handleKeyPress} />
+        <Input
+          placeholder="인증코드"
+          reg={/^[0-9]+$/}
+          onChange={handleCodeChange}
+          onKeyDown={handleKeyPress}
+        />
       </div>
       <div className="login-block timer-block">
         <span className="timer-span">남은 시간 : {convertMStoMMSS(token.remainMillisecond)}</span>

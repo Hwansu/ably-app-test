@@ -96,14 +96,14 @@ const useResetPassword = () => {
     setStep(p => p + 1)
   }, [email, requestIssueToken, setStep, setToken])
   const handleRequestVerification = useCallback(async () => {
-    const authCode = code
-    if (!authCode) {
-      setErrorMsg(messages.emptyAuthCode)
-      return
-    }
     const { issueToken, remainMillisecond } = token
     if (remainMillisecond === 0) {
       setErrorMsg(messages.expireTime)
+      return
+    }
+    const authCode = code
+    if (!authCode) {
+      setErrorMsg(messages.emptyAuthCode)
       return
     }
     const res = await requestVerification({ email, authCode, issueToken })
