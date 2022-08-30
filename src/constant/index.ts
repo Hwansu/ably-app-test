@@ -49,5 +49,5 @@ export const messages = {
   emptyPassword: '비밀번호를 입력해주세요',
   emptyAuthCode: '인증코드를 입력해주세요',
   invalidEmail: '이메일 형식에 맞게 입력해주세요',
-  invalidPassword: '비밀번호를 맞게 입력해주세요',
+  invalidPassword: '비밀번호를 동일하게 입력해주세요',
 }
