@@ -15,10 +15,11 @@ const LoginApi = () => {
 
   const doLogin: fnDoLogin = async ({ email, password }) => {
     try {
-      const { data } = await post<LoginSuccess>(API_ENDPOINT.login, {
+      const { data, status } = await post<LoginSuccess>(API_ENDPOINT.login, {
         email,
         password,
       })
+      if (status !== 200) return { isSuccess: false, message: messages.apiError }
       return { isSuccess: true, data }
     } catch (error) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {

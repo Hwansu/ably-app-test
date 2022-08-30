@@ -18,6 +18,7 @@ const UserInfoApi = () => {
   const fetchUserInfo: fnFetchUserInfo = async () => {
     try {
       const { data, status } = await get<UserInfoSuccess>(API_ENDPOINT.userInfo)
+      if (status !== 200) throw new Error(messages.apiError)
       return data
     } catch (error) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {
@@ -29,7 +30,8 @@ const UserInfoApi = () => {
 
   const doLogout: fnDoLogout = async () => {
     try {
-      const { data } = await post<LogoutSuccess>(API_ENDPOINT.logout)
+      const { data, status } = await post<LogoutSuccess>(API_ENDPOINT.logout)
+      if (status !== 200) return { isSuccess: false, message: messages.apiError }
       return { isSuccess: true, data }
     } catch (error) {
       if (isAxiosError<CommonApiFailure>(error) && error.response) {
