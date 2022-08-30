@@ -130,6 +130,7 @@ const useResetPassword = () => {
     nav(routePaths.login)
     resetState()
     setStep(0)
+    window.sessionStorage.removeItem('token')
   }, [confirmToken, email, nav, newPwd, requestResetPwd, resetState, setStep])
 
   const handleNextClick = useCallback(() => {
