@@ -6,9 +6,9 @@ const MainLayout = () => {
     <>
       <Header isAuthLayout={false} />
       <div className="pad-header-page" />
-      <div className="page-content">
+      <main className="page-content">
         <Outlet />
-      </div>
+      </main>
     </>
   )
 }

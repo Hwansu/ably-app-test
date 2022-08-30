@@ -5,9 +5,9 @@ const AuthLayout = () => {
   return (
     <>
       <Header isAuthLayout />
-      <div className="page-content">
+      <main className="page-content">
         <Outlet />
-      </div>
+      </main>
     </>
   )
 }
