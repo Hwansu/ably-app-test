@@ -96,6 +96,10 @@ const useResetPassword = () => {
   }, [email, requestIssueToken, setStep, setToken])
   const handleRequestVerification = useCallback(async () => {
     const authCode = code
+    if (!authCode) {
+      setErrorMsg(messages.emptyAuthCode)
+      return
+    }
     const { issueToken, remainMillisecond } = token
     if (remainMillisecond === 0) {
       setErrorMsg(messages.expireTime)
@@ -145,6 +149,12 @@ const useResetPassword = () => {
     resetState()
     setStep(0)
   }, [resetState, setStep])
+  const handleKeyPress = useCallback<React.KeyboardEventHandler<HTMLInputElement>>(
+    e => {
+      if (e.key === 'Enter') handleNextClick()
+    },
+    [handleNextClick]
+  )
 
   /**
    * Define Effect
@@ -162,6 +172,7 @@ const useResetPassword = () => {
     handlePasswordChange,
     handlePasswordConfirmChange,
     errorMsg,
+    handleKeyPress,
   }
 }
 

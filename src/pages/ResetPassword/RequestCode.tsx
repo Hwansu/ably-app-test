@@ -2,12 +2,12 @@ import { ErrorMessage } from 'components'
 import { useResetPassword } from 'hooks'
 
 const RequestCode = () => {
-  const { handleEmailChange, handleNextClick, errorMsg } = useResetPassword()
+  const { handleEmailChange, handleNextClick, errorMsg, handleKeyPress } = useResetPassword()
 
   return (
     <div className="login-content">
       <div className="login-block">
-        <input placeholder="이메일" onChange={handleEmailChange} />
+        <input placeholder="이메일" onChange={handleEmailChange} onKeyDown={handleKeyPress} />
       </div>
       <ErrorMessage message={errorMsg} hide />
       <div className="login-block">

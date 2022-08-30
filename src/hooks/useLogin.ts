@@ -69,6 +69,13 @@ const useLogin = () => {
     nav(routePaths.resetPassword)
   }, [nav, resetState])
 
+  const handleKeyPress = useCallback<React.KeyboardEventHandler<HTMLInputElement>>(
+    e => {
+      if (e.key === 'Enter') handleLoginClick()
+    },
+    [handleLoginClick]
+  )
+
   /**
    * Define Effect
    */
@@ -78,6 +85,7 @@ const useLogin = () => {
     register,
     handleLoginClick,
     handleResetPasswordClick,
+    handleKeyPress,
   }
 }
 

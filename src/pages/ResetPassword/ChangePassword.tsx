@@ -8,6 +8,7 @@ const ChangePassword = () => {
     handleNextClick,
     handlePrevClick,
     errorMsg,
+    handleKeyPress,
   } = useResetPassword()
   return (
     <div className="login-content">
@@ -19,6 +20,7 @@ const ChangePassword = () => {
           type="password"
           placeholder="새로운 비밀번호 확인"
           onChange={handlePasswordConfirmChange}
+          onKeyDown={handleKeyPress}
         />
       </div>
       <ErrorMessage hide message={errorMsg} />

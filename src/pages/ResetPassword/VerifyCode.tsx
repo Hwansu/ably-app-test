@@ -3,8 +3,15 @@ import { useInterval, useResetPassword } from 'hooks'
 import { convertMStoMMSS } from 'utils'
 
 const VerifyCode = () => {
-  const { handleNextClick, setToken, token, handleCodeChange, handlePrevClick, errorMsg } =
-    useResetPassword()
+  const {
+    handleNextClick,
+    setToken,
+    token,
+    handleCodeChange,
+    handlePrevClick,
+    errorMsg,
+    handleKeyPress,
+  } = useResetPassword()
   useInterval(() =>
     setToken(p => ({
       ...p,
@@ -15,7 +22,7 @@ const VerifyCode = () => {
   return (
     <div className="login-content">
       <div className="login-block">
-        <input placeholder="인증코드" onChange={handleCodeChange} />
+        <input placeholder="인증코드" onChange={handleCodeChange} onKeyDown={handleKeyPress} />
       </div>
       <div className="login-block timer-block">
         <span className="timer-span">남은 시간 : {convertMStoMMSS(token.remainMillisecond)}</span>

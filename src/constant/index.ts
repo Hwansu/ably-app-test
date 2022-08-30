@@ -47,6 +47,7 @@ export const messages = {
   successReset: '비밀번호 변경이 완료되었습니다',
   emptyEmail: '이메일을 입력해주세요',
   emptyPassword: '비밀번호를 입력해주세요',
+  emptyAuthCode: '인증코드를 입력해주세요',
   invalidEmail: '이메일 형식에 맞게 입력해주세요',
   invalidPassword: '비밀번호를 맞게 입력해주세요',
 }

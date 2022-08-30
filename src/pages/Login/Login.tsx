@@ -2,7 +2,8 @@ import { ErrorMessage } from 'components'
 import { useLogin } from 'hooks'
 
 const Login = () => {
-  const { register, handleLoginClick, handleResetPasswordClick, errorMsg } = useLogin()
+  const { register, handleLoginClick, handleResetPasswordClick, errorMsg, handleKeyPress } =
+    useLogin()
 
   return (
     <div className="login-content">
@@ -11,7 +12,12 @@ const Login = () => {
           <input placeholder="이메일" {...register('email')} />
         </div>
         <div className="login-block">
-          <input type="password" placeholder="비밀번호" {...register('password')} />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            {...register('password')}
+            onKeyDown={handleKeyPress}
+          />
         </div>
         <ErrorMessage message={errorMsg} hide />
         <div className="login-block">
