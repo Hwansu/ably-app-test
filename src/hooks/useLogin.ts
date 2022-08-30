@@ -5,19 +5,15 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useResetRecoilState } from 'recoil'
 import { resetPasswordState } from 'recoils'
+import { FormInputValue } from 'types'
 import { doRegExp } from 'utils'
-
-interface FormInput {
-  email: string
-  password: string
-}
 
 const useLogin = () => {
   /**
    * Define State
    */
   const { doLogin } = LoginApi()
-  const { register, handleSubmit } = useForm<FormInput>({
+  const { register, handleSubmit, control } = useForm<FormInputValue>({
     defaultValues: {
       email: '',
       password: '',
@@ -46,7 +42,7 @@ const useLogin = () => {
     }
     return true
   }, [])
-  const onLoginSubmit = useCallback<SubmitHandler<FormInput>>(
+  const onLoginSubmit = useCallback<SubmitHandler<FormInputValue>>(
     async ({ email, password }) => {
       if (!validateInput({ email, password })) return
 
@@ -90,6 +86,7 @@ const useLogin = () => {
     handleLoginClick,
     handleResetPasswordClick,
     handleKeyPress,
+    control,
   }
 }
 

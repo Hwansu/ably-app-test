@@ -30,3 +30,8 @@ export interface IssueTokenSuccess {
 export interface VerificationSuccess {
   confirmToken: string // 인증 코드 검증 토큰
 }
+
+export interface FormInputValue {
+  email: string
+  password: string
+}

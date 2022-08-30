@@ -1,3 +1,4 @@
+import { Button } from 'components'
 import { useUserInfo } from 'hooks'
 
 const UserInfo = () => {
@@ -18,9 +19,7 @@ const UserInfo = () => {
           <span>{email}</span>
         </p>
       </div>
-      <button type="button" onClick={handleLogoutClick} style={{ width: '200px' }}>
-        로그아웃
-      </button>
+      <Button text="로그아웃" onClick={handleLogoutClick} sx={{ width: '200px' }} />
     </div>
   )
 }

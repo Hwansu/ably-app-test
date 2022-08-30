@@ -1,4 +1,4 @@
-import { ErrorMessage } from 'components'
+import { Button, ErrorMessage, Input } from 'components'
 import { useInterval, useResetPassword } from 'hooks'
 import { convertMStoMMSS } from 'utils'
 
@@ -22,19 +22,15 @@ const VerifyCode = () => {
   return (
     <div className="login-content">
       <div className="login-block">
-        <input placeholder="인증코드" onChange={handleCodeChange} onKeyDown={handleKeyPress} />
+        <Input placeholder="인증코드" onChange={handleCodeChange} onKeyDown={handleKeyPress} />
       </div>
       <div className="login-block timer-block">
         <span className="timer-span">남은 시간 : {convertMStoMMSS(token.remainMillisecond)}</span>
       </div>
       <ErrorMessage hide message={errorMsg} />
       <div className="login-block">
-        <button className="m-r-5" type="button" onClick={handlePrevClick}>
-          처음으로
-        </button>
-        <button className="m-l-5" type="button" onClick={handleNextClick}>
-          다음
-        </button>
+        <Button className="m-r-5" text="처음으로" onClick={handlePrevClick} />
+        <Button className="m-l-5" text="다음" onClick={handleNextClick} />
       </div>
     </div>
   )
