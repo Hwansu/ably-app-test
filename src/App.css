@@ -1,8 +1,9 @@
-html {
+body {
   min-width: 400px;
 }
 header {
   text-align: center;
+  min-width: 400px;
 }
 
 .page-content {
