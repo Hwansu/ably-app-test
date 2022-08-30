@@ -1,6 +1,6 @@
 import { ResetPasswordApi } from 'api'
 import { messages, routePaths } from 'constant'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { emailSelector, stepSelector } from 'recoils'
@@ -27,6 +27,7 @@ const useResetPassword = () => {
   const { requestIssueToken, requestVerification, requestResetPwd } = ResetPasswordApi()
   const nav = useNavigate()
   const [errorMsg, setErrorMsg] = useState('')
+  const submitFlag = useRef(false)
 
   /**
    * Define Memoization
@@ -132,6 +133,8 @@ const useResetPassword = () => {
   }, [confirmToken, email, nav, newPwd, requestResetPwd, resetState, setStep])
 
   const handleNextClick = useCallback(() => {
+    if (submitFlag.current) return
+    submitFlag.current = true
     switch (step) {
       case 0:
         handleRequestIssueToken()
@@ -144,6 +147,7 @@ const useResetPassword = () => {
         break
       default:
     }
+    submitFlag.current = false
   }, [handleRequestIssueToken, handleRequestResetPwd, handleRequestVerification, step])
   const handlePrevClick = useCallback(() => {
     resetState()

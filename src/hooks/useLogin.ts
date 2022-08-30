@@ -1,6 +1,6 @@
 import { LoginApi } from 'api'
 import { messages, routePaths } from 'constant'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useResetRecoilState } from 'recoil'
@@ -26,6 +26,7 @@ const useLogin = () => {
   const nav = useNavigate()
   const resetState = useResetRecoilState(resetPasswordState)
   const [errorMsg, setErrorMsg] = useState('')
+  const submitFlag = useRef(false)
 
   /**
    * Define Memoization
@@ -61,7 +62,10 @@ const useLogin = () => {
     [doLogin, nav, validateInput]
   )
   const handleLoginClick = useCallback(() => {
+    if (submitFlag.current) return
+    submitFlag.current = true
     handleSubmit(onLoginSubmit)()
+    submitFlag.current = false
   }, [handleSubmit, onLoginSubmit])
 
   const handleResetPasswordClick = useCallback(() => {
