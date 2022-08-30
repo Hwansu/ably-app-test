@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { UserInfoApi } from 'api'
 import { routePaths } from 'constant'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserInfoSuccess } from 'types'
 
 const defaultUserInfo: UserInfoSuccess = {
   name: '',
   email: '',
-  profileImage: '',
+  profileImage: '/assets/images/defaultProfile.png',
   lastConnectedAt: new Date(),
 }
 
@@ -18,12 +18,14 @@ const useUserInfo = () => {
    */
   const { fetchUserInfo, doLogout } = UserInfoApi()
   const nav = useNavigate()
+  const [imgSrc, setImgSrc] = useState(defaultUserInfo.profileImage)
   const { data = { ...defaultUserInfo } } = useQuery(['userInfo'], fetchUserInfo, {
     onError() {
       nav(routePaths.login)
     },
     onSuccess(d) {
       if (!d) return nav(routePaths.login)
+      setImgSrc(d.profileImage)
       return d
     },
   })
@@ -50,6 +52,7 @@ const useUserInfo = () => {
 
   return {
     data,
+    imgSrc,
     handleLogoutClick,
   }
 }

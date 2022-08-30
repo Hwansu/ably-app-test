@@ -3,13 +3,14 @@ import { useUserInfo } from 'hooks'
 
 const UserInfo = () => {
   const {
-    data: { email, name, profileImage },
+    data: { email, name },
+    imgSrc,
     handleLogoutClick,
   } = useUserInfo()
   return (
     <div style={{ width: '400px' }}>
       <div className="userinfo-content">
-        <img src={profileImage} alt="profile" />
+        <img src={imgSrc} alt="profile" />
         <div className="userinfo-data-content">
           <p>
             <span>이름</span>

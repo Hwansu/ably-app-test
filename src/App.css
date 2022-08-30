@@ -96,9 +96,10 @@ input:focus {
 }
 
 .userinfo-content img {
-  width: 400px;
-  height: 400px;
+  width: 398px;
+  height: 398px;
   border-radius: 7px 7px 0 0;
+  object-fit: cover;
 }
 .userinfo-data-content {
   margin: 40px 0;
@@ -111,6 +112,7 @@ input:focus {
   flex: 0.7;
   text-align: right;
   padding-right: 20px;
+  line-height: 20px;
 }
 .userinfo-data-content p :last-child {
   flex: 2;
