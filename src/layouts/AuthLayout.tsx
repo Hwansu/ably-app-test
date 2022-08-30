@@ -1,11 +1,10 @@
-import { Header, HeadLogo } from 'components'
+import { Header } from 'components'
 import { Outlet } from 'react-router-dom'
 
 const AuthLayout = () => {
   return (
     <>
-      <HeadLogo />
-      <Header />
+      <Header isAuthLayout />
       <div className="page-content">
         <Outlet />
       </div>

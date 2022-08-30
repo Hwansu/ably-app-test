@@ -1,6 +1,6 @@
 import { ResetPasswordApi } from 'api'
 import { messages, routePaths } from 'constant'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { emailSelector, stepSelector } from 'recoils'
@@ -11,6 +11,7 @@ import {
   newPasswordSelector,
   resetPasswordState,
 } from 'recoils/resetPassword'
+import { doRegExp } from 'utils'
 
 const useResetPassword = () => {
   /**
@@ -25,6 +26,7 @@ const useResetPassword = () => {
   const resetState = useResetRecoilState(resetPasswordState)
   const { requestIssueToken, requestVerification, requestResetPwd } = ResetPasswordApi()
   const nav = useNavigate()
+  const [errorMsg, setErrorMsg] = useState('')
 
   /**
    * Define Memoization
@@ -58,10 +60,34 @@ const useResetPassword = () => {
     [setNewPwd]
   )
 
+  // const validateInput = useCallback(({ email = '', password = '' }): boolean => {
+  //   if (!email) {
+  //     setErrorMsg(messages.emptyEmail)
+  //     return false
+  //   }
+  //   if (!doRegExp(email, 'email')) {
+  //     setErrorMsg(messages.invalidEmail)
+  //     return false
+  //   }
+  //   if (!password) {
+  //     setErrorMsg(messages.emptyPassword)
+  //     return false
+  //   }
+  //   return true
+  // }, [])
+
   const handleRequestIssueToken = useCallback(async () => {
+    if (!email) {
+      setErrorMsg(messages.emptyEmail)
+      return
+    }
+    if (!doRegExp(email, 'email')) {
+      setErrorMsg(messages.invalidEmail)
+      return
+    }
     const res = await requestIssueToken(email)
     if (!res.isSuccess) {
-      window.alert(res.message)
+      setErrorMsg(res.message)
       return
     }
     const { issueToken, remainMillisecond } = res.data
@@ -72,12 +98,12 @@ const useResetPassword = () => {
     const authCode = code
     const { issueToken, remainMillisecond } = token
     if (remainMillisecond === 0) {
-      window.alert(messages.expireTime)
+      setErrorMsg(messages.expireTime)
       return
     }
     const res = await requestVerification({ email, authCode, issueToken })
     if (!res.isSuccess) {
-      window.alert(res.message)
+      setErrorMsg(res.message)
       return
     }
     const { confirmToken: cToken } = res.data
@@ -86,9 +112,13 @@ const useResetPassword = () => {
   }, [code, email, requestVerification, setCToken, setStep, token])
   const handleRequestResetPwd = useCallback(async () => {
     const { newPassword, newPasswordConfirm } = newPwd
+    if (!newPassword || !newPasswordConfirm || newPassword !== newPasswordConfirm) {
+      setErrorMsg(messages.invalidPassword)
+      return
+    }
     const res = await requestResetPwd({ email, confirmToken, newPassword, newPasswordConfirm })
     if (!res.isSuccess) {
-      window.alert(res.message)
+      setErrorMsg(res.message)
       return
     }
     window.alert(messages.successReset)
@@ -131,6 +161,7 @@ const useResetPassword = () => {
     handleCodeChange,
     handlePasswordChange,
     handlePasswordConfirmChange,
+    errorMsg,
   }
 }
 

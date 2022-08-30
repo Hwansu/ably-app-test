@@ -5,3 +5,10 @@ export const convertMStoMMSS = (ms: number) => {
   const minutes = Math.floor((ms / 1000 / 60) % 60)
   return `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`
 }
+type regType = 'email'
+const regTypes: {
+  [k in regType]: RegExp
+} = {
+  email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+}
+export const doRegExp = (text: string, type: regType): boolean => regTypes[type].test(text || '')

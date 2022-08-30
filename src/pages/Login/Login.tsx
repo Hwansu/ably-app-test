@@ -1,7 +1,8 @@
+import { ErrorMessage } from 'components'
 import { useLogin } from 'hooks'
 
 const Login = () => {
-  const { register, handleLoginClick, handleResetPasswordClick } = useLogin()
+  const { register, handleLoginClick, handleResetPasswordClick, errorMsg } = useLogin()
 
   return (
     <div className="login-content">
@@ -12,11 +13,12 @@ const Login = () => {
         <div className="login-block">
           <input type="password" placeholder="비밀번호" {...register('password')} />
         </div>
+        <ErrorMessage message={errorMsg} hide />
         <div className="login-block">
-          <button type="button" onClick={handleLoginClick}>
+          <button className="m-r-5" type="button" onClick={handleLoginClick}>
             로그인
           </button>
-          <button type="button" onClick={handleResetPasswordClick}>
+          <button className="m-l-5" type="button" onClick={handleResetPasswordClick}>
             비밀번호 변경
           </button>
         </div>

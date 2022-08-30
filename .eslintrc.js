@@ -43,6 +43,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-empty-function': 'off',
     'no-alert': 'off',
+    'react/require-default-props': 'off',
   },
   settings: {
     'import/resolver': {

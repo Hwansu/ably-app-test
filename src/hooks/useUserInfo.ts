@@ -36,6 +36,7 @@ const useUserInfo = () => {
       window.alert(res.message)
       return
     }
+    window.sessionStorage.removeItem('token')
     nav(routePaths.login)
   }, [doLogout, nav])
   /**

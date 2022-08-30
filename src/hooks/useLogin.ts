@@ -1,10 +1,11 @@
 import { LoginApi } from 'api'
-import { routePaths } from 'constant'
-import { useCallback } from 'react'
+import { messages, routePaths } from 'constant'
+import { useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useResetRecoilState } from 'recoil'
 import { resetPasswordState } from 'recoils'
+import { doRegExp } from 'utils'
 
 interface FormInput {
   email: string
@@ -24,22 +25,40 @@ const useLogin = () => {
   })
   const nav = useNavigate()
   const resetState = useResetRecoilState(resetPasswordState)
+  const [errorMsg, setErrorMsg] = useState('')
 
   /**
    * Define Memoization
    */
+  const validateInput = useCallback(({ email = '', password = '' }): boolean => {
+    if (!email) {
+      setErrorMsg(messages.emptyEmail)
+      return false
+    }
+    if (!doRegExp(email, 'email')) {
+      setErrorMsg(messages.invalidEmail)
+      return false
+    }
+    if (!password) {
+      setErrorMsg(messages.emptyPassword)
+      return false
+    }
+    return true
+  }, [])
   const onLoginSubmit = useCallback<SubmitHandler<FormInput>>(
     async ({ email, password }) => {
+      if (!validateInput({ email, password })) return
+
       const res = await doLogin({ email, password })
       if (!res.isSuccess) {
-        window.alert(res.message)
+        setErrorMsg(res.message)
         return
       }
       const { accessToken } = res.data
       window.sessionStorage.setItem('token', accessToken)
       nav(routePaths.userInfo)
     },
-    [doLogin, nav]
+    [doLogin, nav, validateInput]
   )
   const handleLoginClick = useCallback(() => {
     handleSubmit(onLoginSubmit)()
@@ -55,6 +74,7 @@ const useLogin = () => {
    */
 
   return {
+    errorMsg,
     register,
     handleLoginClick,
     handleResetPasswordClick,

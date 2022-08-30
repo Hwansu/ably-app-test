@@ -1,4 +1,4 @@
 import Header from './Header/Header'
-import HeadLogo from './HeadLogo/HeadLogo'
+import ErrorMessage from './ErrorMessage/ErrorMessage'
 
-export { Header, HeadLogo }
+export { Header, ErrorMessage }

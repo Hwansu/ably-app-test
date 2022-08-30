@@ -18,7 +18,7 @@ const UserInfo = () => {
           <span>{email}</span>
         </p>
       </div>
-      <button type="button" onClick={handleLogoutClick}>
+      <button type="button" onClick={handleLogoutClick} style={{ width: '200px' }}>
         로그아웃
       </button>
     </div>
