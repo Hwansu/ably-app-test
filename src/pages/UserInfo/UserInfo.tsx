@@ -7,19 +7,21 @@ const UserInfo = () => {
     handleLogoutClick,
   } = useUserInfo()
   return (
-    <div className="userinfo-content">
-      <img src={profileImage} alt="profile" />
-      <div className="userinfo-data-content">
-        <p>
-          <span>이름</span>
-          <span>{name}</span>
-        </p>
-        <p>
-          <span>이메일</span>
-          <span>{email}</span>
-        </p>
+    <div style={{ width: '400px' }}>
+      <div className="userinfo-content">
+        <img src={profileImage} alt="profile" />
+        <div className="userinfo-data-content">
+          <p>
+            <span>이름</span>
+            <span>{name}</span>
+          </p>
+          <p>
+            <span>이메일</span>
+            <span>{email}</span>
+          </p>
+        </div>
       </div>
-      <Button text="로그아웃" onClick={handleLogoutClick} sx={{ width: '200px' }} />
+      <Button className="userinfo-btn" text="로그아웃" onClick={handleLogoutClick} />
     </div>
   )
 }

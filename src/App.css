@@ -90,29 +90,46 @@ input:focus {
 }
 
 .userinfo-content {
-  width: 100%;
+  /* width: 100%; */
   text-align: center;
+  text-align: center;
+  border: 1px solid #a9a9a9;
+  border-radius: 8px;
+  /* padding: 15px; */
 }
 
 .userinfo-content img {
-  width: 200px;
-  height: 200px;
+  /* width: 300px;
+  height: 300px; */
+  border-radius: 7px 7px 0 0;
 }
 .userinfo-data-content {
-  margin: 50px 0;
+  margin: 40px 0;
+  font-size: 14px;
 }
 .userinfo-data-content p {
   display: flex;
 }
 .userinfo-data-content p :first-child {
-  flex: 1;
+  flex: 0.7;
   text-align: right;
-  padding-right: 30px;
+  padding-right: 20px;
 }
 .userinfo-data-content p :last-child {
-  flex: 1;
+  flex: 2;
   text-align: left;
-  padding-left: 30px;
+  padding: 0 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  line-height: 20px;
+  word-break: break-word;
+}
+
+.userinfo-btn {
+  margin-top: 30px;
 }
 
 .pad-header-page {
@@ -129,7 +146,6 @@ input:focus {
 
 .error-message span {
   color: #ff003e;
-  /* color: #ff5160; */
   font-size: 12px;
 }
 
